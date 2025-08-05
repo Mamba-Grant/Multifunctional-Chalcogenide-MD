@@ -1,0 +1,6 @@
+/home/mamba/Documents/repos/Dim2DB/.devenv/flake.json
+/home/mamba/Documents/repos/Dim2DB/.devenv.flake.nix
+/home/mamba/Documents/repos/Dim2DB/devenv.local.nix
+/home/mamba/Documents/repos/Dim2DB/devenv.lock
+/home/mamba/Documents/repos/Dim2DB/devenv.nix
+/home/mamba/Documents/repos/Dim2DB/devenv.yaml
