@@ -468,10 +468,10 @@
                                     class="text-muted-foreground text-left text-muted-foreground w-32 break-words"
                                     >VBM wrt. vacuum</span
                                 >
-                                <span
-                                    class="text-muted-foreground text-left text-muted-foreground w-32 break-words"
-                                    >{item.vbm.toFixed(5) ?? "N/A"}</span
-                                >
+                                <!-- <span -->
+                                <!--     class="text-muted-foreground text-left text-muted-foreground w-32 break-words" -->
+                                <!--     >{item.vbm.toFixed(5) ?? "N/A"}</span -->
+                                <!-- > -->
                             </div>
                             <div
                                 class="flex flex-1 justify-between py-2 border-b border-primary/10"
@@ -480,10 +480,10 @@
                                     class="text-muted-foreground text-left text-muted-foreground w-32 break-words"
                                     >VBM wrt. vacuum (SOC)</span
                                 >
-                                <span
-                                    class="text-muted-foreground text-left text-muted-foreground w-32 break-words"
-                                    >{item["vbm soc"].toFixed(5) ?? "N/A"}</span
-                                >
+                                <!-- <span -->
+                                <!--     class="text-muted-foreground text-left text-muted-foreground w-32 break-words" -->
+                                <!--     >{item["vbm soc"].toFixed(5) ?? "N/A"}</span -->
+                                <!-- > -->
                             </div>
                             <div
                                 class="flex flex-1 justify-between py-2 border-b border-primary/10"
@@ -492,10 +492,10 @@
                                     class="text-muted-foreground text-left text-muted-foreground w-32 break-words"
                                     >CBM wrt. vacuum</span
                                 >
-                                <span
-                                    class="text-muted-foreground text-left text-muted-foreground w-32 break-words"
-                                    >{item.cbm.toFixed(5) ?? "N/A"}</span
-                                >
+                                <!-- <span -->
+                                <!--     class="text-muted-foreground text-left text-muted-foreground w-32 break-words" -->
+                                <!--     >{item.cbm.toFixed(5) ?? "N/A"}</span -->
+                                <!-- > -->
                             </div>
                             <div
                                 class="flex flex-1 justify-between py-2 border-b border-primary/10"
@@ -504,10 +504,10 @@
                                     class="text-muted-foreground text-left text-muted-foreground w-32 break-words"
                                     >CBM wrt. vacuum (SOC)</span
                                 >
-                                <span
-                                    class="text-muted-foreground text-left text-muted-foreground w-32 break-words"
-                                    >{item["cbm soc"].toFixed(5) ?? "N/A"}</span
-                                >
+                                <!-- <span -->
+                                <!--     class="text-muted-foreground text-left text-muted-foreground w-32 break-words" -->
+                                <!--     >{item["cbm soc"].toFixed(5) ?? "N/A"}</span -->
+                                <!-- > -->
                             </div>
                         </div>
                     </div>

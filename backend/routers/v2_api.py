@@ -43,11 +43,11 @@ class Material(BaseModel):
         alias="density of states at fermi"
     )
     effective_mass: Optional[float] = Field(alias="effective mass")
-    vbm: Optional[float]
-    cbm: Optional[float]
+    vbm: Optional[list[float] | list[list[float]]]
+    cbm: Optional[list[float] | list[list[float]]]
     band_gap: Optional[float] = Field(alias="band gap")
-    vbm_soc: Optional[float] = Field(alias="vbm soc")
-    cbm_soc: Optional[float] = Field(alias="cbm soc")
+    vbm_soc: Optional[list[float] | list[list[float]]] = Field(alias="vbm soc")
+    cbm_soc: Optional[list[float] | list[list[float]]] = Field(alias="cbm soc")
     band_gap_soc: Optional[float] = Field(alias="band gap soc")
     layered: Optional[bool] = Field(alias="layered?")
     component_layers: Optional[List[str]] = Field(alias="component layers")
@@ -55,6 +55,7 @@ class Material(BaseModel):
     band_locations: Optional[str] = Field(alias="band locations")
     band_soc_location: Optional[str] = Field(alias="band soc location")
     dos_location: Optional[str] = Field(alias="dos location")
+    hash: Optional[str]
 
 
 @router.get("")
@@ -64,7 +65,7 @@ async def get_all() -> list[Material]:
         pool.connection() as conn,
         conn.cursor(row_factory=class_row(Material)) as cur,
     ):
-        await cur.execute("select * from material_data")
+        await cur.execute("select * from data")
         records = await cur.fetchall()
         return records
 
@@ -80,7 +81,7 @@ async def get_by_formula(formula: Optional[str] = None) -> Any:
         conn.cursor(row_factory=class_row(Material)) as cur,
     ):
         await cur.execute(
-            "SELECT * FROM material_data WHERE formula ILIKE %s", [f"%{formula}%"]
+            "SELECT * FROM data WHERE formula ILIKE %s", [f"%{formula}%"]
         )
         records = await cur.fetchall()
         if not records:
@@ -109,7 +110,7 @@ async def search_contains(query: str, limit: int = 20) -> Any:
                        WHEN "spacegroup" ILIKE %s THEN 70
                        ELSE 50
                    END as relevance_score
-            FROM material_data 
+            FROM data 
             WHERE formula ILIKE %s 
                OR "MP-ID" ILIKE %s
                OR "spacegroup" ILIKE %s
@@ -141,7 +142,7 @@ async def get(id: int) -> Material:
         pool.connection() as conn,
         conn.cursor(row_factory=class_row(Material)) as cur,
     ):
-        await cur.execute("select * from material_data where id=%s", [id])
+        await cur.execute("select * from data where id=%s", [id])
         record = await cur.fetchone()
         if not record:
             raise HTTPException(404)
@@ -152,4 +153,4 @@ async def get(id: int) -> Material:
 async def delete(id: int):
     pool = get_async_pool()
     async with pool.connection() as conn:
-        await conn.execute("delete from material_data where id=%s", [id])
+        await conn.execute("delete from data where id=%s", [id])
