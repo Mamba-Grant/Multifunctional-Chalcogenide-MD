@@ -4,6 +4,7 @@
     import { quintOut } from "svelte/easing";
     import CardTables from "./CardTables.svelte";
     import CrystalPlot from "./CrystalPlot.svelte";
+    import BandDOSPlot from "./BandDOSPlot.svelte";
 
     export let item;
 
@@ -423,7 +424,7 @@
                                 <!-- <div class="text-4xl mb-2">📊</div> -->
                                 <!-- <div>Property Plots & Charts</div> -->
                                 <div class="text-sm opacity-75 mt-2">
-                                    Band structure, DOS, etc.
+                                    <BandDOSPlot {item} />
                                 </div>
                             </div>
                         </div>

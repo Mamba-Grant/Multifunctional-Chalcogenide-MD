@@ -1,4 +1,4 @@
-from typing import Any, List, Optional
+from typing import Any, Dict, List, Optional
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 from psycopg.rows import class_row
@@ -57,9 +57,19 @@ class Material(BaseModel):
     dos_location: Optional[str] = Field(alias="dos location")
     hash: Optional[str]
 
+class BandDOS(BaseModel):
+    bands: Optional[List] = Field(default=None, alias="bands")
+    band_distances: Optional[List] = Field(default=None, alias="band distances")
+    kpoints: Optional[Dict] = Field(default=None, alias="KPoints")
+    bands_soc: Optional[List] = Field(default=None, alias="bands soc")
+    band_distances_soc: Optional[List] = Field(default=None, alias="band distances soc")
+    density_of_states_energies: Optional[List] = Field(default=None, alias="density of states energies")
+    total_density_of_states: Optional[List] = Field(default=None, alias="total density of states")
+    projected_density_of_states: Optional[List[List]] = Field(default=None, alias="projected density of states")
+    fermi_energy: Optional[float] = Field(default=None, alias="fermi energy")
 
 @router.get("")
-async def get_all() -> list[Material]:
+async def get_all_data() -> list[Material]:
     pool = get_async_pool()
     async with (
         pool.connection() as conn,
@@ -69,6 +79,22 @@ async def get_all() -> list[Material]:
         records = await cur.fetchall()
         return records
 
+@router.get("/dos_from_hash")
+async def get_dos_bands_from_hash(hash: str) -> Any:
+    """
+    Provided a hash of a material, grab the dos and bands from the separate table.
+    """
+    if not hash:
+        return {"message": "No hash provided"}
+
+    pool = get_async_pool()
+    async with (
+        pool.connection() as conn,
+        conn.cursor(row_factory=class_row(BandDOS)) as cur,
+    ):
+        await cur.execute("SELECT * FROM dos_bands WHERE hash = %s;", (hash,))
+        records = await cur.fetchall()
+        return records
 
 @router.get("/query")
 async def get_by_formula(formula: Optional[str] = None) -> Any:

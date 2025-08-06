@@ -10,12 +10,6 @@ from routers import v2_api
 
 pool: AsyncConnectionPool[Any] | None = None  # Will be initialized during lifespan
 
-origins = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-]
-
-
 async def check_connections() -> None:
     while True:
         await asyncio.sleep(600)  # wait 10 minutes
@@ -38,12 +32,17 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 app.include_router(v2_api.router, prefix="")  # include the methods declared in our api
 
+origins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
+
 # Allow the API to be used by the frontend
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,  # You can also use ["*"] to allow all, not recommended for prod
     allow_credentials=True,
-    allow_methods=["*"],  # Or ["GET", "POST", ...]
+    allow_methods=["GET"],  # Or ["GET", "POST", ...]
     allow_headers=["*"],  # Or restrict to specific headers
 )
 
