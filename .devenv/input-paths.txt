@@ -1,6 +1,7 @@
-/home/mamba/Documents/repos/Dim2DB/.devenv/flake.json
-/home/mamba/Documents/repos/Dim2DB/.devenv.flake.nix
-/home/mamba/Documents/repos/Dim2DB/devenv.local.nix
-/home/mamba/Documents/repos/Dim2DB/devenv.lock
-/home/mamba/Documents/repos/Dim2DB/devenv.nix
-/home/mamba/Documents/repos/Dim2DB/devenv.yaml
+/home/mamba/Documents/repos/Multifunctional-Chalcogenide-MD/.devenv/flake.json
+/home/mamba/Documents/repos/Multifunctional-Chalcogenide-MD/.devenv.flake.nix
+/home/mamba/Documents/repos/Multifunctional-Chalcogenide-MD/.env
+/home/mamba/Documents/repos/Multifunctional-Chalcogenide-MD/devenv.local.nix
+/home/mamba/Documents/repos/Multifunctional-Chalcogenide-MD/devenv.lock
+/home/mamba/Documents/repos/Multifunctional-Chalcogenide-MD/devenv.nix
+/home/mamba/Documents/repos/Multifunctional-Chalcogenide-MD/devenv.yaml

@@ -5,9 +5,7 @@
   inputs,
   ...
 }: {
-  dotenv.disableHint = true; # This line tells devenv to disable a hint in the terminal
-
-  packages = [pkgs.git pkgs.posting pkgs.zlib];
+  packages = [pkgs.git pkgs.stdenv.cc.cc.lib pkgs.gcc-unwrapped.lib pkgs.zlib pkgs.nodejs];
 
   languages.python = {
     enable = true;
@@ -16,16 +14,17 @@
 
   languages.javascript = {
     enable = true;
-    npm.enable = true;
+    npm = {
+      enable = true;
+      install.enable = true;
+    };
   };
 
-  enterShell = ''
-    git --version
-  '';
+  services.postgres.enable = true;
 
-  # https://devenv.sh/tests/
-  enterTest = ''
-    echo "Running tests"
-    git --version | grep --color=auto "${pkgs.git.version}"
-  '';
+  env.LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
+    pkgs.zlib
+    pkgs.stdenv.cc.cc.lib
+    pkgs.glibc
+  ];
 }
