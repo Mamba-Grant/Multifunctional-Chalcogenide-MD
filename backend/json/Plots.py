@@ -1,15 +1,7 @@
 #import mocules
-import ase
-from ase import Atoms
-from ase.io import write, read 
 import matplotlib.pyplot as plt
 import json
 import glob
-from pymatgen.io.vasp import Vasprun
-from pymatgen.electronic_structure.bandstructure import BandStructureSymmLine
-from pymatgen.electronic_structure.plotter import BSPlotter
-from pymatgen.electronic_structure.dos import CompleteDos
-from pymatgen.electronic_structure.core import OrbitalType
 
 def plot_band_nosoc(jfile):
     #load data from json file
@@ -123,6 +115,7 @@ def plot_dos(jfile):
     energy = data['density of states energies']
     tdos = data['total density of states']
     pdos = data['projected density of states']
+    const ticks = data['KPoints']
 
     #plot total density of states
     plt.plot(energy,tdos, label='total')

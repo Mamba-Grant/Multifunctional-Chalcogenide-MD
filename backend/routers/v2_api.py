@@ -93,7 +93,7 @@ async def get_dos_bands_from_hash(hash: str) -> Any:
         conn.cursor(row_factory=class_row(BandDOS)) as cur,
     ):
         await cur.execute("SELECT * FROM dos_bands WHERE hash = %s;", (hash,))
-        records = await cur.fetchall()
+        records = await cur.fetchone()
         return records
 
 @router.get("/query")
