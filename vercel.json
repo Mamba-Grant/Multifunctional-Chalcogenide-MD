@@ -6,5 +6,5 @@
     "routes": [
         { "src": "/v1/(.*)", "dest": "backend/main.py" },
         { "src": "/(.*)", "dest": "/frontend/public/$1" }
-    ],
+    ]
 }
