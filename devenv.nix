@@ -5,7 +5,7 @@
   inputs,
   ...
 }: {
-  packages = [pkgs.git pkgs.stdenv.cc.cc.lib pkgs.gcc-unwrapped.lib pkgs.zlib pkgs.nodejs];
+  packages = [pkgs.git pkgs.stdenv.cc.cc.lib pkgs.gcc-unwrapped.lib pkgs.zlib pkgs.nodePackages_latest.vercel];
 
   languages.python = {
     enable = true;
@@ -17,6 +17,7 @@
     npm = {
       enable = true;
       install.enable = true;
+      package = pkgs.nodejs_24;
     };
   };
 
