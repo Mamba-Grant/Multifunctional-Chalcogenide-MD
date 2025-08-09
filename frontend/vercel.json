@@ -5,12 +5,15 @@
       "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "public"
+        "distDir": ".svelte-kit/output"
       }
     }
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "api/main.py" },
-    { "src": "/(.*)", "dest": "public/$1" }
+    {
+      "src": "/(.*)",
+      "dest": ".svelte-kit/$1"
+    }
   ]
 }
