@@ -40,7 +40,7 @@ origins = [
 # Allow the API to be used by the frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,  # You can also use ["*"] to allow all, not recommended for prod
+    allow_origins=["*"],  # You can also use ["*"] to allow all, not recommended for prod
     allow_credentials=True,
     allow_methods=["GET"],  # Or ["GET", "POST", ...]
     allow_headers=["*"],  # Or restrict to specific headers
