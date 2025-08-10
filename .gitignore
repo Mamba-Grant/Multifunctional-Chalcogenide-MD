@@ -7,3 +7,9 @@ devenv.local.nix
 
 # pre-commit
 .pre-commit-config.yaml
+*.nix
+.envrc
+*.lock
+package-lock.json
+*.lock
+package-lock.json
