@@ -127,10 +127,10 @@ def get_or_create_hash_id(cur, hash_str: str) -> int:
 
 # Connection (adjust credentials as needed)
 conn = psycopg.connect(
-    dbname="fastapi_psycopg3", user="postgres", password="", host="localhost"
+    dbname="local_db", user="postgres", password="", host="localhost"
 )
 
-for root, dirs, files in os.walk("./backend/json/"):
+for root, dirs, files in os.walk("./migration/json/"):
     for idx, file in enumerate(files):
         if not file.endswith(".json"):
             print(f"WARNING: skipping {file}")

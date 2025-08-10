@@ -13,3 +13,21 @@ devenv.local.nix
 package-lock.json
 *.lock
 package-lock.json
+
+# Devenv
+.devenv*
+devenv.local.nix
+
+# direnv
+.direnv
+
+# pre-commit
+.pre-commit-config.yaml
+*.db-shm
+*.db-shm
+*.db-wal
+.devenv/nix-eval-cache.db-shm
+.devenv/nix-eval-cache.db-wal
+.devenv/nix-eval-cache.db-wal
+.devenv/tasks.db-shm
+.devenv/tasks.db-wal

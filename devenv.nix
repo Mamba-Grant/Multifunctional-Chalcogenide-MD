@@ -22,6 +22,7 @@
   };
 
   services.postgres.enable = true;
+  env.PGHOST = "/var/run/postgresql";
 
   env.LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
     pkgs.zlib
