@@ -1,24 +1,24 @@
 [project]
-name = "multifunctional-chalcogenide-md"
+name = "testing-deployment"
 version = "0.1.0"
 description = ""
 authors = [
     {name = "Grant Saggars",email = "mumbo1002@gmail.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.13,<4.0"
 dependencies = [
     "psycopg (>=3.2.9,<4.0.0)",
     "fastapi[standard] (>=0.116.1,<0.117.0)",
+    "pydantic (>=2.11.7,<3.0.0)",
     "psycopg-pool (>=3.2.6,<4.0.0)",
+    "dotenv (>=0.9.9,<0.10.0)",
+    "pydantic-settings (>=2.10.1,<3.0.0)",
     "psycopg-binary (>=3.2.9,<4.0.0)",
-    "pydantic-settings (>=2.10.1,<3.0.0)"
+    "mangum (>=0.19.0,<0.20.0)",
+    "supabase (>=2.18.0,<3.0.0)"
 ]
 
-[tool.poetry]
-
-[tool.poetry.group.dev.dependencies]
-jupyter = "^1.1.1"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

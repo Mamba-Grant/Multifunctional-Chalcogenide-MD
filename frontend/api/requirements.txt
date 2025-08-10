@@ -1,5 +1,0 @@
-psycopg
-fastapi[standard]
-psycopg-pool
-psycopg-binary
-pydantic-settings

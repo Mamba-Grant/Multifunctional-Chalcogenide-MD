@@ -3,14 +3,8 @@ inputs:
   nixpkgs:
     url: github:cachix/devenv-nixpkgs/rolling
 
-nixpkgs:
-  config:
-    allowUnfree: true
-    x86_64-linux:
-      cudaSupport: true
-      cudaCapabilities: ["7.5", "8.6", "8.9"]
-
-allowUnfree: true
+# If you're using non-OSS software, you can set allowUnfree to true.
+# allowUnfree: true
 
 # If you're willing to use a package that's vulnerable
 # permittedInsecurePackages:
