@@ -30,7 +30,15 @@
 </script>
 
 <button
-    class="element-btn aspect-square w-[2.5vw] rounded-lg min-w-[1.5em] min-h-[1.5em]"
+    class="
+    element-btn
+    aspect-square
+    min-w-[1rem] min-h-[1rem] text-xs <!-- mobile size -->
+    sm:min-w-[3rem] sm:min-h-[3rem] sm:text-sm <!-- small screens and up -->
+    md:min-w-[4rem] md:min-h-[4rem] md:text-base <!-- medium screens and up -->
+    rounded-md
+    flex items-center justify-center
+  "
     style="grid-column: {element.column}; grid-row: {element.row}; background: {colors[
         element.category
     ]};"
