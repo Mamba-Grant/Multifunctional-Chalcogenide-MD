@@ -39,3 +39,7 @@ Before discussing how to make changes to the data here, you should understand ho
 3. **Parse** all json files in `./json/`, and populate the database with: `poetry run python ./migration/v5_populate_database_from_json.py`.
 4. **Dump** the local database to a .sql file which can be uploaded by running: `pg_dump -U postgres -h localhost -d local_db > ./migration/db_dump.sql`.
 5. **Push** the database to Supabase by running: `psql -h db.akpcvtofvdtynqzshweu.supabase.co -p 5432 -d postgres -U postgres < ./migration/db_dump.sql`
+
+## Working on the frontend
+
+The frontend is built from a standard SvelteKit project, so feel free to try learning from the docs or a fresh template if you want to get an idea of how the project is structured. The most significant components/pages are `page.svelte` and `v3_Card.svelte` which are responsbile for the main layout and the clickable rows.
