@@ -26,7 +26,7 @@ Once installed:
 > ### Disclaimer for devenv users & those interested in devenv 
 > A `devenv.nix` and `devenv.yaml` configuration file have been included in the repository, which may provide a quick and easy way to get started with the project.
 > 
-> [devenv](https://devenv.sh/) is a declarative nix-based configuration tool for developers. Devenv can significantly reduce the effort needed to configure poetry and npm. At the time of writing, this is __only__ available on unix-based systems (Mac and Linux), unless you wish to use WSL on Windows (The author of this discourages such behavior, since nix via WSL is generally an unpleasant experience). 
+> [devenv](https://devenv.sh/) is a declarative nix-based configuration tool for developers. Devenv can significantly reduce the effort needed to configure poetry and npm. At the time of writing, this is __only__ available on unix-based systems (Mac and Linux), unless you wish to use WSL on Windows (The author of this README discourages such behavior, since nix via WSL is generally an unpleasant experience). 
 > 
 > Assuming devenv is set up, npm, poetry, and postgres will be installed when navigating to this repository in a terminal. Packages are installed normally using poetry and npm, as described above.
 
