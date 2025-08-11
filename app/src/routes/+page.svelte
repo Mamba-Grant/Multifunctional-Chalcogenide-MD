@@ -1,20 +1,27 @@
 <script lang="ts">
-    import Card from "$lib/components/v3_Card.svelte";
+    let testitem = {
+        "MP-ID": 123,
+        formula: "H2O",
+        spacegroup: "P2₁/c",
+        "band gap": 1.23,
+    };
+
+    // import Card from "$lib/components/v3_Card.svelte";
     import PeriodicTable from "$lib/components/PeriodicTable.svelte";
     import SearchBox from "$lib/components/SearchBox.svelte";
-    import Title from "$lib/components/Title.svelte";
     import { writable, derived } from "svelte/store";
     import { searchQuery, materials } from "$lib/store";
     import Fuse from "fuse.js";
+    import TableRow from "$lib/components/TableRow.svelte";
 
     // Load materials on mount
     import { onMount } from "svelte";
     onMount(async () => {
         try {
             const res = await fetch("/api/get_all");
+            // const res = await fetch("http://127.0.0.1:8000/v1/material_data");
             const data = await res.json();
             materials.set(data);
-            console.log(data);
         } catch (err) {
             console.error("Failed to load materials:", err);
         }
@@ -207,39 +214,34 @@
     <SearchBox />
 </div>
 
-<div class="flex flex-col items-center">
+<div class="flex flex-col items-center max-w-[60vw] w-auto shrink mx-auto">
     <!-- Header -->
-    <div
-        class="flex p-3 min-h-12 bg-background hover:bg-primary/5"
-        style="font-weight: bold; width: 90%;"
-    >
-        <div class="flex gap-4 flex-1">
-            <div class="text-left text-muted-foreground w-24 break-words">
-                MP-ID
-            </div>
-            <div class="text-left w-32 break-words">Formula</div>
-            <div class="text-left text-muted-foreground w-28 break-words">
-                Spacegroup
-            </div>
-            <div class="text-left text-muted-foreground w-28 break-words">
-                Bandgap
-            </div>
+    <div class="grid grid-cols-[15vw_15vw_15vw_15vw] gap-4 font-bold">
+        <div class="text-center text-[clamp(0.75rem,1.5vw,1rem)]">MP-ID</div>
+        <div class="text-center text-[clamp(0.75rem,1.5vw,1rem)]">Formula</div>
+        <div class="text-center text-[clamp(0.75rem,1.5vw,1rem)]">
+            Spacegroup
         </div>
-        <div class="ml-2">
-            <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-            ></svg>
-        </div>
+        <div class="text-center text-[clamp(0.75rem,1.5vw,1rem)]">Bandgap</div>
+        <!-- <div class="ml-2"> -->
+        <!--     <svg -->
+        <!--         width="16" -->
+        <!--         height="16" -->
+        <!--         viewBox="0 0 24 24" -->
+        <!--         fill="none" -->
+        <!--         stroke="currentColor" -->
+        <!--         stroke-width="2" -->
+        <!--     ></svg> -->
+        <!-- </div> -->
     </div>
+
+    <!-- <TableRow {item} /> -->
 
     <!-- Results -->
     {#each $filteredMaterials as item}
-        <Card {item} />
+        <!-- <Card {item} /> -->
+        <!-- <TableRow {testitem} /> -->
+        <TableRow {item} />
     {/each}
 
     <!-- Show results count -->

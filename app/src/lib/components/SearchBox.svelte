@@ -3,7 +3,6 @@
     import { cubicOut } from "svelte/easing";
     import { searchQuery } from "$lib/store";
 
-    // Create a tweened store for smooth width animation
     const width = tweened(40, {
         duration: 300,
         easing: cubicOut,

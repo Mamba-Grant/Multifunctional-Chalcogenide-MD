@@ -1,6 +1,4 @@
 <script lang="ts">
-    console.log("loaded card!");
-
     import { spring } from "svelte/motion";
     import { slide, fade, fly } from "svelte/transition";
     import { quintOut } from "svelte/easing";

@@ -2,6 +2,7 @@
     import { onMount } from "svelte";
 
     export let item;
+
     export let supercell = [2, 2, 1];
 
     const baseSymbols: string[] = item.symbols ?? [];

@@ -121,8 +121,6 @@
             mode: "lines",
         }));
 
-        console.log(traces_pdos);
-
         if (plotDiv_Band && (window as any).Plotly) {
             (window as any).Plotly.newPlot(
                 plotDiv_Band,
