@@ -33,9 +33,9 @@
     class="
     element-btn
     aspect-square
-    min-w-[1rem] min-h-[1rem] text-xs <!-- mobile size -->
-    sm:min-w-[3rem] sm:min-h-[3rem] sm:text-sm <!-- small screens and up -->
-    md:min-w-[4rem] md:min-h-[4rem] md:text-base <!-- medium screens and up -->
+    min-w-[clamp(1rem,3vw,3rem)]
+    min-h-[clamp(1rem,3vw,3rem)]
+    text-[clamp(0.75rem,1.5vw,1rem)]
     rounded-md
     flex items-center justify-center
   "

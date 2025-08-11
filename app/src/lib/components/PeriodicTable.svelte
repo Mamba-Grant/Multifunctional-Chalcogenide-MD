@@ -23,7 +23,7 @@
     }
 </script>
 
-<div class="periodic-table max-w-[95vw] mx-auto">
+<div class="periodic-table max-w-[90vw] mx-auto">
     {#each elements as element}
         <ElementButton {element} onClick={handleElementClick} />
     {/each}

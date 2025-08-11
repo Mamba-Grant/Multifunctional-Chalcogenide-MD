@@ -202,22 +202,9 @@
     );
 </script>
 
-<!-- <div class="absolute top-0 left-0 w-[25%] flex flex-col items-center"> -->
-<!--     <Title /> -->
-<!-- </div> -->
-
-<!-- <div class="absolute top-0 left-0 w-[75%] flex flex-col items-center"> -->
-<!--     <div class="bg-amber-400">asdfjha</div> -->
-<!-- </div> -->
-
 <div class="mb-4 flex flex-col items-center w-auto shrink">
     <PeriodicTable />
     <SearchBox />
-
-    <div class="text-sm text-gray-600 mt-2">
-        <strong>Filter examples:</strong> elements:Sb,Ge | bandgap:&lt;0.1 | spacegroup:Pm-3m
-        | bandgap:&gt;=2.0
-    </div>
 </div>
 
 <div class="flex flex-col items-center">
