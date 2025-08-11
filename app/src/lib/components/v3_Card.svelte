@@ -423,8 +423,6 @@
                             class="bg-gray-100 dark:bg-gray-800 rounded-lg aspect-square flex items-center justify-center text-gray-500 dark:text-gray-400 min-h-[400px]"
                         >
                             <div class="text-center">
-                                <!-- <div class="text-4xl mb-2">📊</div> -->
-                                <!-- <div>Property Plots & Charts</div> -->
                                 <div class="text-sm opacity-75 mt-2">
                                     <BandDOSPlot {item} />
                                 </div>
@@ -471,10 +469,6 @@
                                     class="text-muted-foreground text-left text-muted-foreground w-32 break-words"
                                     >VBM wrt. vacuum</span
                                 >
-                                <!-- <span -->
-                                <!--     class="text-muted-foreground text-left text-muted-foreground w-32 break-words" -->
-                                <!--     >{item.vbm.toFixed(5) ?? "N/A"}</span -->
-                                <!-- > -->
                             </div>
                             <div
                                 class="flex flex-1 justify-between py-2 border-b border-primary/10"
@@ -483,10 +477,6 @@
                                     class="text-muted-foreground text-left text-muted-foreground w-32 break-words"
                                     >VBM wrt. vacuum (SOC)</span
                                 >
-                                <!-- <span -->
-                                <!--     class="text-muted-foreground text-left text-muted-foreground w-32 break-words" -->
-                                <!--     >{item["vbm soc"].toFixed(5) ?? "N/A"}</span -->
-                                <!-- > -->
                             </div>
                             <div
                                 class="flex flex-1 justify-between py-2 border-b border-primary/10"
@@ -495,10 +485,6 @@
                                     class="text-muted-foreground text-left text-muted-foreground w-32 break-words"
                                     >CBM wrt. vacuum</span
                                 >
-                                <!-- <span -->
-                                <!--     class="text-muted-foreground text-left text-muted-foreground w-32 break-words" -->
-                                <!--     >{item.cbm.toFixed(5) ?? "N/A"}</span -->
-                                <!-- > -->
                             </div>
                             <div
                                 class="flex flex-1 justify-between py-2 border-b border-primary/10"
@@ -507,63 +493,11 @@
                                     class="text-muted-foreground text-left text-muted-foreground w-32 break-words"
                                     >CBM wrt. vacuum (SOC)</span
                                 >
-                                <!-- <span -->
-                                <!--     class="text-muted-foreground text-left text-muted-foreground w-32 break-words" -->
-                                <!--     >{item["cbm soc"].toFixed(5) ?? "N/A"}</span -->
-                                <!-- > -->
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- <!-- Additional analysis -->
-                <!-- <div -->
-                <!--     class="bg-card rounded-xl p-6 border border-primary/20 shadow-sm" -->
-                <!--     style="background-color: white;" -->
-                <!--     in:fade={{ delay: 500, duration: 300 }} -->
-                <!-- > -->
-                <!--     <h3 class="text-lg font-semibold mb-4 text-foreground"> -->
-                <!--         Thermodynamic & Mechanical Properties -->
-                <!--     </h3> -->
-                <!--     <div -->
-                <!--         class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" -->
-                <!--     > -->
-                <!--         <div class="text-center p-4 bg-primary/5 rounded-lg"> -->
-                <!--             <div class="text-2xl font-bold text-primary"> -->
-                <!--                 -2.34 -->
-                <!--             </div> -->
-                <!--             <div class="text-sm text-muted-foreground"> -->
-                <!--                 Formation Energy (eV/atom) -->
-                <!--             </div> -->
-                <!--         </div> -->
-                <!--         <div class="text-center p-4 bg-primary/5 rounded-lg"> -->
-                <!--             <div class="text-2xl font-bold text-primary"> -->
-                <!--                 145 -->
-                <!--             </div> -->
-                <!--             <div class="text-sm text-muted-foreground"> -->
-                <!--                 Bulk Modulus (GPa) -->
-                <!--             </div> -->
-                <!--         </div> -->
-                <!--         <div class="text-center p-4 bg-primary/5 rounded-lg"> -->
-                <!--             <div class="text-2xl font-bold text-primary"> -->
-                <!--                 89 -->
-                <!--             </div> -->
-                <!--             <div class="text-sm text-muted-foreground"> -->
-                <!--                 Shear Modulus (GPa) -->
-                <!--             </div> -->
-                <!--         </div> -->
-                <!--         <div class="text-center p-4 bg-primary/5 rounded-lg"> -->
-                <!--             <div class="text-2xl font-bold text-primary"> -->
-                <!--                 0.24 -->
-                <!--             </div> -->
-                <!--             <div class="text-sm text-muted-foreground"> -->
-                <!--                 Poisson's Ratio -->
-                <!--             </div> -->
-                <!--         </div> -->
-                <!--     </div> -->
-                <!-- </div> -->
-
-                <!-- Navigation hint -->
                 <div class="text-center text-sm text-muted-foreground py-8">
                     <div class="flex items-center justify-center gap-2">
                         <kbd class="px-2 py-1 bg-primary/10 rounded text-xs"

@@ -210,7 +210,7 @@
 <!--     <div class="bg-amber-400">asdfjha</div> -->
 <!-- </div> -->
 
-<div class="mb-4 flex flex-col items-center">
+<div class="mb-4 flex flex-col items-center w-auto shrink">
     <PeriodicTable />
     <SearchBox />
 

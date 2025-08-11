@@ -23,7 +23,7 @@
     }
 </script>
 
-<div class="periodic-table">
+<div class="periodic-table max-w-[95vw] mx-auto">
     {#each elements as element}
         <ElementButton {element} onClick={handleElementClick} />
     {/each}
@@ -36,6 +36,8 @@
         grid-template-rows: repeat(10, 1fr);
         gap: 0.2em;
         max-width: 80%;
+        width: auto;
         margin: 1em;
+        flex-shrink: 1;
     }
 </style>

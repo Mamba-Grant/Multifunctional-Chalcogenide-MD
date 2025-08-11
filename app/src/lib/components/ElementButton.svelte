@@ -30,7 +30,7 @@
 </script>
 
 <button
-    class="element-btn"
+    class="element-btn aspect-square w-[2.5vw] rounded-lg min-w-[1.5em] min-h-[1.5em]"
     style="grid-column: {element.column}; grid-row: {element.row}; background: {colors[
         element.category
     ]};"
@@ -41,12 +41,6 @@
 >
 
 <style>
-    .element-btn {
-        width: 3em;
-        height: 3em;
-        border-radius: 0.5em;
-    }
-
     .element-btn:hover {
         filter: brightness(90%);
         cursor: pointer;
