@@ -6,20 +6,21 @@
         "band gap": 1.23,
     };
 
-    // import Card from "$lib/components/v3_Card.svelte";
     import PeriodicTable from "$lib/components/PeriodicTable.svelte";
     import SearchBox from "$lib/components/SearchBox.svelte";
     import { writable, derived } from "svelte/store";
     import { searchQuery, materials } from "$lib/store";
     import Fuse from "fuse.js";
     import TableRow from "$lib/components/TableRow.svelte";
+    import { dev } from "$app/environment";
+
+    const baseApi = dev ? "http://127.0.0.1:8000/api" : "/api"; // automatiaclly route from dev/prod
 
     // Load materials on mount
     import { onMount } from "svelte";
     onMount(async () => {
         try {
-            const res = await fetch("/api/get_all");
-            // const res = await fetch("http://127.0.0.1:8000/v1/material_data");
+            const res = await fetch(`${baseApi}/get_all`);
             const data = await res.json();
             materials.set(data);
         } catch (err) {
@@ -235,12 +236,8 @@
         <!-- </div> -->
     </div>
 
-    <!-- <TableRow {item} /> -->
-
     <!-- Results -->
     {#each $filteredMaterials as item}
-        <!-- <Card {item} /> -->
-        <!-- <TableRow {testitem} /> -->
         <TableRow {item} />
     {/each}
 

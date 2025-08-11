@@ -1,14 +1,31 @@
 <script lang="ts">
     import { onMount } from "svelte";
+    import { dev } from "$app/environment";
+    import Page from "../../routes/+page.svelte";
 
-    export let item;
+    export let item; // inherit the data table entry we're looking at -- grab the hash and query the database for the actual data later
 
-    function loadPlotly(): Promise<void> {
+    let plotCanvas: HTMLElement;
+    let plotDiv_Band: HTMLElement;
+    let plotDiv_DOS: HTMLElement;
+
+    // Bind width and height reactively from parent container
+    let containerWidth = 0;
+    let containerHeight = 0;
+
+    // Plotly data and layout stores
+    let bandsTraces = [];
+    let dosTraces = [];
+    let bandsLayout = {};
+    let dosLayout = {};
+
+    // Track if plots are initialized
+    let plotsInitialized = false;
+
+    // Load Plotly once
+    function loadPlotly() {
+        if ((window as any).Plotly) return Promise.resolve();
         return new Promise((resolve, reject) => {
-            if ((window as any).Plotly) {
-                resolve(); // already loaded
-                return;
-            }
             const script = document.createElement("script");
             script.src = "https://cdn.plot.ly/plotly-3.0.1.min.js";
             script.onload = () => resolve();
@@ -18,143 +35,153 @@
         });
     }
 
-    const layout_bands = {
-        showlegend: false,
-        paper_bgcolor: "rgba(0,0,0,0)",
-        plot_bgcolor: "rgba(0,0,0,0)",
-        width: 500,
-        height: 300,
-        margin: {
-            // control plot padding inside the container
-            l: 40, // left margin, reduce if you want more space
-            r: 20, // right margin
-            t: 20, // top margin (title area)
-            b: 20, // bottom margin (x-axis labels)
-        },
-        xaxis: {
-            linewidth: 0,
-            tickmode: "array", // Use an explicit list of ticks
-            showticklabels: true, // Show tick labels
-            showgrid: false, // Optional: Hide grid lines if needed
-            ticks: "", // Optional: Hide tick marks
-        },
-        yaxis: {
-            linewidth: 0,
-        },
-    };
+    // Reactive sizing: Calculate plot widths based on container width
+    $: bandWidth = Math.floor(containerWidth * 0.7);
+    $: dosWidth = containerWidth - bandWidth;
 
-    const layout_dos = {
-        showlegend: false,
-        paper_bgcolor: "rgba(0,0,0,0)",
-        plot_bgcolor: "rgba(0,0,0,0)",
-        width: 500,
-        height: 200,
-        margin: {
-            l: 40, // left margin, reduce if you want more space
-            r: 20, // right margin
-            t: 20, // top margin (title area)
-            b: 20, // bottom margin (x-axis labels)
-        },
-        xaxis: {
-            linewidth: 0,
-        },
-        yaxis: {
-            linewidth: 0,
-        },
-    };
-
-    onMount(async () => {
-        await loadPlotly();
-
-        const plotDiv_Band = document.getElementById("plotDiv_Band");
-        const plotDiv_DOS = document.getElementById("plotDiv_DOS");
-
-        const res = await fetch(
-            `/api/get_plotinfo_from_hash?hash=${item.hash}`,
-        );
-
-        const data = await res.json();
-
-        console.log(data);
-
-        const bands = data["bands"];
-        const distances = data["band distances"];
-        const ticks = data["KPoints"];
-
-        const numBands = bands[0].length; // bands[segment][band][point]
-        const numSegments = bands.length;
-        const allDistances = distances.flat(); // flatten all segments into one array
-
-        const traces_bands = [];
-        for (let j = 0; j < numBands; j++) {
-            const bandY = [];
-            for (let i = 0; i < numSegments; i++) {
-                bandY.push(...bands[i][j]);
-            }
-
-            traces_bands.push({
-                x: allDistances,
-                y: bandY,
-                type: "scatter",
-                mode: "lines",
-                name: `Band ${j}`,
+    // Reactive layouts updated on size change
+    $: if (plotsInitialized) {
+        const Plotly = (window as any).Plotly;
+        if (Plotly) {
+            Plotly.relayout(plotDiv_Band, {
+                width: bandWidth,
+                height: containerHeight,
+            });
+            Plotly.relayout(plotDiv_DOS, {
+                width: dosWidth,
+                height: containerHeight,
             });
         }
+    }
 
-        const energy = data["density of states energies"];
-        const tdos = data["total density of states"];
-        const pdos = data["projected density of states"];
+    async function initializePlots() {
+        await loadPlotly();
 
-        const traces_tdos = [
+        const Plotly = (window as any).Plotly;
+        const baseApi = dev ? "http://127.0.0.1:8000/api" : "/api";
+
+        const res = await fetch(
+            `${baseApi}/get_plotinfo_from_hash?hash=${item.hash}`,
+        );
+        const data = await res.json();
+
+        const bands = data.bands;
+        const distances = data["band distances"].flat();
+        const ticks = data.KPoints;
+
+        // Construct band traces
+        const numBands = bands[0].length;
+        bandsTraces = Array.from({ length: numBands }, (_, j) => ({
+            x: distances,
+            y: [].concat(...bands.map((segment: number[]) => segment[j])),
+            type: "scatter",
+            mode: "lines",
+            name: `Band ${j}`,
+        }));
+
+        // DOS traces
+        dosTraces = [
             {
-                x: tdos,
-                y: energy,
+                x: data["total density of states"],
+                y: data["density of states energies"],
                 type: "scatter",
                 mode: "lines",
             },
         ];
 
-        const traces_pdos = pdos.map((d) => ({
-            x: d,
-            y: energy,
-            type: "scatter",
-            mode: "lines",
-        }));
-
-        if (plotDiv_Band && (window as any).Plotly) {
-            (window as any).Plotly.newPlot(
-                plotDiv_Band,
-                traces_bands,
-                {
-                    ...layout_bands,
-                    xaxis: {
-                        tickmode: "array",
-                        tickvals: ticks["distance"],
-                        ticktext: ticks["label"],
+        // Layout shared config
+        const baseBandsLayout = {
+            showlegend: false,
+            paper_bgcolor: "rgba(0,0,0,0)",
+            plot_bgcolor: "rgba(0,0,0,0)",
+            margin: { l: 40, r: 5, t: 20, b: 40 },
+            xaxis: {
+                linewidth: 0,
+                tickmode: "array",
+                tickvals: ticks.distance,
+                ticktext: ticks.label,
+                showticklabels: true,
+                showgrid: false,
+                ticks: "",
+                title: {
+                    text: "k-points",
+                    font: {
+                        size: 18,
                     },
                 },
-                {
-                    displaylogo: false,
-                },
-            );
-        }
+            },
+            yaxis: { linewidth: 0 },
+        };
 
-        const traces_dos = [...traces_tdos, ...traces_pdos];
+        const baseDosLayout = {
+            showlegend: false,
+            paper_bgcolor: "rgba(0,0,0,0)",
+            plot_bgcolor: "rgba(0,0,0,0)",
+            margin: { l: 5, r: 20, t: 20, b: 40 },
+            xaxis: { linewidth: 0 },
+            yaxis: {
+                linewidth: 0,
+                ticks: "",
+                nticks: 0,
+                showticklabels: false,
+            },
+        };
 
-        if (plotDiv_DOS && (window as any).Plotly) {
-            (window as any).Plotly.newPlot(
-                plotDiv_DOS,
-                traces_dos,
-                layout_dos,
-                {
-                    displaylogo: false,
+        bandsLayout = {
+            ...baseBandsLayout,
+            height: containerHeight || 500,
+            width: bandWidth || 350,
+            yaxis: {
+                title: {
+                    text: "E - E<sub>F</sub> [eV]",
+                    font: {
+                        size: 18,
+                    },
                 },
-            );
-        }
+            },
+        };
+
+        dosLayout = {
+            ...baseDosLayout,
+            height: containerHeight || 500,
+            width: dosWidth || 200,
+        };
+
+        // Initialize plots
+        await Plotly.newPlot(plotDiv_Band, bandsTraces, bandsLayout, {
+            displaylogo: false,
+            responsive: false,
+        });
+        await Plotly.newPlot(plotDiv_DOS, dosTraces, dosLayout, {
+            displaylogo: false,
+            responsive: false,
+        });
+
+        plotsInitialized = true;
+    }
+
+    // Create an observer to get the area to plot in -- reactive variables don't work here...
+    onMount(() => {
+        if (!plotCanvas?.parentElement) return;
+
+        const ro = new ResizeObserver((entries) => {
+            for (const entry of entries) {
+                containerWidth = entry.contentRect.width;
+                containerHeight = entry.contentRect.height;
+            }
+        });
+
+        ro.observe(plotCanvas.parentElement);
+        initializePlots();
+        return () => ro.disconnect();
     });
 </script>
 
-<div id="plotly" class="flex flex-col gap-0">
-    <div id="plotDiv_DOS" class="m-0 p-0"></div>
-    <div id="plotDiv_Band" class="m-0 p-0"></div>
+<div
+    bind:this={plotCanvas}
+    id="plotly"
+    class="flex flex-row gap-0 w-full h-full"
+>
+    <div bind:this={plotDiv_Band} id="plotDiv_Band" class="m-0 p-0"></div>
+    <div bind:this={plotDiv_DOS} id="plotDiv_DOS" class="m-0 p-0"></div>
 </div>

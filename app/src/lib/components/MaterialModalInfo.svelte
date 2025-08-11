@@ -232,13 +232,9 @@
                     Band Structure and Density of States
                 </h3>
                 <div
-                    class="bg-gray-100 dark:bg-gray-800 rounded-lg aspect-square flex items-center justify-center text-gray-500 dark:text-gray-400 min-h-[400px]"
+                    class="bg-gray-100 dark:bg-gray-800 rounded-lg aspect-square flex items-center justify-center text-gray-500 dark:text-gray-400 w-[98%]"
                 >
-                    <div class="text-center">
-                        <div class="text-sm opacity-75 mt-2">
-                            <BandDOSPlot {item} />
-                        </div>
-                    </div>
+                    <BandDOSPlot {item} />
                 </div>
                 <div class="space-y-3">
                     <div

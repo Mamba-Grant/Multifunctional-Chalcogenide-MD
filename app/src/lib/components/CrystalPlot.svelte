@@ -3,6 +3,28 @@
 
     export let item;
 
+    let plotCanvas: HTMLElement;
+    let containerWidth = 0;
+    let containerHeight = 0;
+
+    let plotDiv: HTMLElement;
+
+    $: plotWidth = Math.floor(containerWidth * 0.9);
+    $: plotHeight = Math.floor(containerHeight * 0.9);
+
+    let plotsInitialized = false;
+
+    // Reactive layouts updated on size change
+    $: if (plotsInitialized) {
+        const Plotly = (window as any).Plotly;
+        if (Plotly) {
+            Plotly.relayout(plotDiv, {
+                width: plotWidth,
+                height: plotHeight,
+            });
+        }
+    }
+
     export let supercell = [2, 2, 1];
 
     const baseSymbols: string[] = item.symbols ?? [];
@@ -331,10 +353,9 @@
     const layout = {
         showlegend: false,
         paper_bgcolor: "rgba(0,0,0,0)",
-        width: 700,
-        height: 700,
         dragmode: "turntable",
         aspectratio: { x: 1, y: 1, z: 1 },
+        margin: { l: 10, r: 10, t: 10, b: 10 },
         scene: {
             xaxis: {
                 autorange: true,
@@ -372,18 +393,45 @@
         },
     };
 
-    onMount(async () => {
+    // onMount(async () => {
+    async function initializePlots() {
         await loadPlotly();
 
-        const plotDiv = document.getElementById("plotDiv");
         if (plotDiv && (window as any).Plotly) {
-            (window as any).Plotly.newPlot(plotDiv, plot_data, layout, {
-                displaylogo: false,
-            });
+            (window as any).Plotly.newPlot(
+                plotDiv,
+                plot_data,
+                {
+                    ...layout,
+                    height: plotHeight || 700,
+                    width: plotWidth || 700,
+                },
+                {
+                    displaylogo: false,
+                    responsive: false,
+                },
+            );
         }
+
+        plotsInitialized = true;
+    }
+
+    onMount(() => {
+        if (!plotCanvas?.parentElement) return;
+
+        const ro = new ResizeObserver((entries) => {
+            for (const entry of entries) {
+                containerWidth = entry.contentRect.width;
+                containerHeight = entry.contentRect.height;
+            }
+        });
+
+        ro.observe(plotCanvas.parentElement);
+        initializePlots();
+        return () => ro.disconnect();
     });
 </script>
 
-<div id="plotly">
-    <div id="plotDiv"></div>
+<div id="plotly" bind:this={plotCanvas}>
+    <div id="plotDiv" bind:this={plotDiv}></div>
 </div>
