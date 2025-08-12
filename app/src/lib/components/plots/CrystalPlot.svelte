@@ -1,5 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
+    import { loadPlotly } from "$lib/plotlyLoader";
 
     export let item;
 
@@ -335,20 +336,7 @@
     export let plot_data = [...data, ...bond_data, ...cell_data];
 
     // Breaks if we don't wait for plotly
-    function loadPlotly(): Promise<void> {
-        return new Promise((resolve, reject) => {
-            if ((window as any).Plotly) {
-                resolve(); // already loaded
-                return;
-            }
-            const script = document.createElement("script");
-            script.src = "https://cdn.plot.ly/plotly-3.0.1.min.js";
-            script.onload = () => resolve();
-            script.onerror = () =>
-                reject(new Error("Failed to load Plotly.js"));
-            document.body.appendChild(script);
-        });
-    }
+    loadPlotly();
 
     const layout = {
         showlegend: false,

@@ -1,12 +1,21 @@
 <script lang="ts">
     import { fade } from "svelte/transition";
     import CardTables from "./CardTables.svelte";
-    import CrystalPlot from "./CrystalPlot.svelte";
-    import BandDOSPlot from "./BandDOSPlot.svelte";
+    import CrystalPlot from "$lib/components/plots/CrystalPlot.svelte";
+    import BandDOSPlot from "$lib/components/plots/BandDOSPlot.svelte";
 
     export let item;
 
     let scrollContainer: HTMLElement;
+
+    const cell = item.cell?.array;
+    const [a, b, c]: (number | string)[] = cell
+        ? cell.map((row) =>
+              Math.sqrt(row.reduce((sum, val) => sum + val ** 2, 0)),
+          )
+        : ["N/A", "N/A", "N/A"];
+
+    console.log(a, b, c);
 </script>
 
 <div
@@ -114,18 +123,11 @@
                         class="flex justify-between py-2 border-b border-primary/10"
                     >
                         <span class="text-muted-foreground"
-                            >Lattice Parameters (please check validity of
-                            calculation) [Å]</span
+                            >Lattice Parameters [Å]</span
                         >
                         <!-- should include some conditionals here to simplify a=b or b=c or a=b=c -->
                         <span class="font-sm text-right break-words">
-                            a={item.cell?.array?.[0]?.[0] != null
-                                ? item.cell?.array[0][0].toFixed(3)
-                                : "N/A"}, b={item.cell?.array?.[1]?.[1] != null
-                                ? item.cell?.array[1][1].toFixed(3)
-                                : "N/A"}, c={item.cell?.array?.[2]?.[2] != null
-                                ? item.cell?.array[2][2].toFixed(3)
-                                : "N/A"}
+                            a={a}, b={b}, c={c}
                         </span>
                     </div>
                     <div

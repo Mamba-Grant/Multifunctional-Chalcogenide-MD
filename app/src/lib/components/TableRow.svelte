@@ -162,7 +162,7 @@
             {item.spacegroup ?? "N/A"}
         </div>
         <div class="text-center text-[clamp(0.75rem,1.5vw,1rem)]">
-            {item["band gap"] ?? "N/A"}
+            {item["band gap"] != null ? item["band gap"]?.toFixed(5) : "N/A"}
         </div>
     </div>
     <div
@@ -182,7 +182,10 @@
                     Spacegroup: {item.spacegroup ?? "N/A"}
                 </span>
                 <span class="bg-primary/10 px-2 py-1 rounded">
-                    Bandgap: {item["band gap"] ?? "N/A"}
+                    <!-- Bandgap: {item["band gap"].toFixed(5) ?? "N/A"} -->
+                    Bandgap: {item["band gap"] != null
+                        ? item["band gap"]?.toFixed(5)
+                        : "N/A"}
                 </span>
             </div>
         </div>

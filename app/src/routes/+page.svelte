@@ -1,20 +1,11 @@
 <script lang="ts">
-    let testitem = {
-        "MP-ID": 123,
-        formula: "H2O",
-        spacegroup: "P2₁/c",
-        "band gap": 1.23,
-    };
-
     import PeriodicTable from "$lib/components/PeriodicTable.svelte";
     import SearchBox from "$lib/components/SearchBox.svelte";
-    import { writable, derived } from "svelte/store";
+    import { derived } from "svelte/store";
     import { searchQuery, materials } from "$lib/store";
     import Fuse from "fuse.js";
     import TableRow from "$lib/components/TableRow.svelte";
-    import { dev } from "$app/environment";
-
-    const baseApi = dev ? "http://127.0.0.1:8000/api" : "/api"; // automatiaclly route from dev/prod
+    import { baseApi } from "$lib/api";
 
     // Load materials on mount
     import { onMount } from "svelte";
